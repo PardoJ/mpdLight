@@ -1,0 +1,38 @@
+image boot.vfat {
+	vfat {
+		files = {
+#BOOT_FILES#
+		}
+	}
+	size = 32M
+}
+	
+image pi-home.vfat {
+	name = "pi-home.vfat"
+	vfat {
+		files = { }
+	}
+	empty = true
+	size = 128M
+}
+
+image sdcard.img {
+	hdimage {
+	}
+
+	partition boot {
+		partition-type = 0xC
+		bootable = "true"
+		image = "boot.vfat"
+	}
+
+	partition rootfs {
+		partition-type = 0x83
+		image = "rootfs.ext4"
+	}
+	
+	partition pi-home.vfat {
+		partition-type = 0xC
+		image  = "pi-home.vfat"
+	}
+}
